@@ -1,8 +1,4 @@
-<?php
-
-define('WORDS_URL', 'https://raw.githubusercontent.com/ozadorozhnyi/words/main/words.json');
-
-session_start();
+<?php 
 
 $action = 'start';
 if(isset($_GET['action'])) {
@@ -11,11 +7,12 @@ if(isset($_GET['action'])) {
 
 switch ($action) {
     case 'start':
-        require_once __DIR__.'/views/start.php';
+        require_once APP_VIEWS_PATH.'/start.php';
         break;
 
     case 'init':
-        $words = json_decode(file_get_contents(WORDS_URL), true);
+        $words = json_decode(file_get_contents(WORDS_FILE_PATH), true);
+        shuffle($words);
         if (count($words)) {
             for ($i = 0; $i < count($words); $i++) { 
                 if($i == $_POST['word_count']) {
@@ -35,7 +32,7 @@ switch ($action) {
         if ($wordLeft) {
             $nextWord = array_shift($_SESSION['game']['learning']);
             $_SESSION['game']['learned'][] = $nextWord;
-            require_once __DIR__.'/views/learning.php';
+            require_once APP_VIEWS_PATH.'/learning.php';
             break;
         } else {
             unset($_SESSION['game']['learning']);
@@ -58,7 +55,7 @@ switch ($action) {
                 'en' => $nextWord['en'],
                 'ua' => $nextWord['ua'],
             ];
-            require_once __DIR__.'/views/answering.php';
+            require_once APP_VIEWS_PATH.'/answering.php';
             break;
         } else {
             unset($_SESSION['game']['learning']);
@@ -79,6 +76,7 @@ switch ($action) {
             ];
         }
 
-        require_once __DIR__.'/views/score.php';
+        unset($_SESSION['game']['answering']);
+        require_once APP_VIEWS_PATH.'/score.php';
         break;
 }

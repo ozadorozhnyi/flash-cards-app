@@ -13,7 +13,7 @@
                 <p id="ua"><?= $nextWord['ua'] ?></p>
                 <input type="hidden" name="key" value="<?= $nextWord['ua'] ?>">
                 <br>
-                <input type="text" name="user_translate" id="" value="">
+                <input type="text" name="user_translate" id="" value="" required="required" placeholder="напишіть переклад">
             </div>
             <br>
             <input type="submit" name="btnNextAnswer" value="Наступне слово!">

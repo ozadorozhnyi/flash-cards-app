@@ -1,0 +1,3 @@
+<?php
+
+// Functions library used there in the entire application...
