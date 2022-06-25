@@ -10,7 +10,11 @@ $config = [
      * Приклад: 'home' => 'HomeController@index'
      */
     'routes' => [
-        'home' => 'HomeController@index',
+        'start' => 'AppController@start',
+        'init' => 'AppController@init',
+        'learning' => 'AppController@learning',
+        'answering' => 'AppController@answering',
+        'score' => 'AppController@score',
     ],
 
     /**

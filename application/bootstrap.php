@@ -20,6 +20,22 @@ define('APP_VIEWS_PATH', __DIR__.'/views/');                // файловий 
 
 define('WORDS_FILE_PATH', __DIR__.'/storage/json/words.json'); // шлях до json-файла із словами 
 
+// spl_autoload_register() - реєструє задану анонімну функцію
+// як автоматичний "загрузчик" файлів із класами
+// в нашому випадку ця анонімна ф-ція буде шукати і require-рити клас-кнотроллер
+spl_autoload_register(function ($controllerClassName) {
+    // будуємо ФАЙЛОВИЙ шлях до класа-контроллера, який потрібно завантажити
+    $controllerFilePath = APP_CONTROLLERS_PATH."{$controllerClassName}.php";
+    if (is_readable($controllerFilePath)) {
+        // include_once А НЕ require_once
+        // include_once - не зупинить програму якщо такий файл не знайдено
+        // require_once - зупинить
+        // і таких "автозагрузчиків" може і буде багато, тому вони повинні
+        // виконувати послідовно і не зупиняти програму якщо файл знайти не вдалося
+        include_once $controllerFilePath;
+    } 
+});
+
 require_once __DIR__.'/config.php';
 require_once __DIR__.'/functions.php';
 require_once __DIR__.'/routes.php';
